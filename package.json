@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server:start": "cross-env-shell docker run --rm --name appkit -v $npm_package_config_dist:/app -v $npm_package_config_conf:/etc/nginx/nginx.conf -p 8080:80 -d nginx:latest",
+    "server:start": "cross-env-shell docker run --rm --name appkit -v $DIST:/app -v $CONF:/etc/nginx/nginx.conf -p 8080:80 nginx:latest",
     "server:stop": "docker container stop appkit",
     "server:reload": "docker container exec appkit nginx -s reload",
     "server:repl": "docker container exec -it appkit /bin/bash",
-    "start": "tsc -w",
+    "server:njs": "docker container exec -it appkit njs",
+    "server:log": "docker container logs -f appkit",
+    "start": "ts-node --project tsconfig-script.json script/watch.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +25,13 @@
   },
   "homepage": "https://github.com/HearTao/appkit#readme",
   "devDependencies": {
+    "@types/node": "^12.12.14",
     "cross-env": "^6.0.3",
+    "chalk": "^3.0.0",
+    "ts-node": "^8.5.2",
     "typescript": "^3.8.0-dev.20191126"
+  },
+  "dependencies": {
+    
   }
 }

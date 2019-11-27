@@ -1,3 +1,6 @@
-function greet(r: any) {
-  r.return(200, "Hello world!")
+import a from './a.js'
+
+function greet(r: HTTPRequest) {
+  r.log(a)
+  r.return(HTTPStatusCode.OK, a())
 }
